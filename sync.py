@@ -32,6 +32,7 @@ SERVERS = [
     {
         "os": "Windows",
         "guild": "1572461825553862656",
+        "board": "1572846900611256441",  # 管理人だけが見る #進み具合ボード
         # (STEPの部屋のID, その部屋の本文メッセージのID) を STEP0〜7 の順に
         "steps": [
             ("1572463901684138104", "1572483841883644014"),
@@ -47,6 +48,7 @@ SERVERS = [
     {
         "os": "Mac",
         "guild": "1572527079767937064",
+        "board": "1572847068303859833",
         "steps": [
             ("1572527080502071460", "1572527603804282920"),
             ("1572527080502071461", "1572527719843897346"),
@@ -132,6 +134,17 @@ class Discord:
                 return out
             after = page[-1]["id"]
 
+    def update_board(self, channel: str, bot_id: str, text: str) -> str:
+        """ボードの部屋の BOT の投稿を書きかえる（なければ新しく出す）。"""
+        for m in self.req("GET", f"/channels/{channel}/messages", params={"limit": 20}):
+            if m["author"]["id"] == bot_id:
+                if m.get("content") == text:
+                    return "same"
+                self.req("PATCH", f"/channels/{channel}/messages/{m['id']}", json={"content": text})
+                return "edited"
+        self.req("POST", f"/channels/{channel}/messages", json={"content": text})
+        return "posted"
+
     def add_role(self, guild: str, user: str, role: str):
         self.req("PUT", f"/guilds/{guild}/members/{user}/roles/{role}",
                  headers={"X-Audit-Log-Reason": "STEP clear (auto)"})
@@ -186,6 +199,7 @@ def main():
         return
 
     dc = Discord(secret("DISCORD_TOKEN"))
+    bot_id = dc.req("GET", "/users/@me")["id"]
     today = dt.datetime.now(JST).strftime("%Y-%m-%d")
 
     ws = book.worksheet(SHEET_TAB)
@@ -218,6 +232,7 @@ def main():
                 if u["id"] in done:
                     done[u["id"]].add(step)
 
+        people = []
         for m in members:
             uid, uname = m["user"]["id"], m["user"]["username"]
             name = m.get("nick") or m["user"].get("global_name") or uname
@@ -248,6 +263,16 @@ def main():
                         log.append(f"🔓 {name}：STEP{step + 1} のロール")
             if changed and hit:
                 updates.append({"range": f"N{rown}", "values": [[today]]})
+            already = {i for i in range(8) if r[COL_STEP0 - 1 + i] is True}
+            people.append((name, already | done[uid]))
+
+        if srv.get("board") and not a.dry:
+            try:
+                res = dc.update_board(srv["board"], bot_id, board_text(srv["os"], people, secret("SHEET_ID")))
+                if res != "same":
+                    log.append(f"📊 {srv['os']} のボードを更新")
+            except requests.HTTPError as e:
+                log.append(f"📊 {srv['os']} のボードを更新できませんでした（{e.response.status_code}）")
 
     if a.dry:
         print("\n".join(log) or "変更なし（dry）")
@@ -257,6 +282,40 @@ def main():
     now = dt.datetime.now(JST).isoformat(timespec="seconds")
     state_ws.update(range_name={"windows": "B2", "mac": "B3", "github": "B4"}[a.role], values=[[now]])
     print(f"{a.role}: " + ("\n".join(log) if log else "変更なし"))
+
+
+STEP_NAMES = ["準備", "はじめてのAI", "プロンプトの型", "指示テンプレ",
+              "Threads自動投稿", "インスタ自動投稿", "動画自動編集", "ジャービス"]
+
+
+def board_text(os_name: str, people: list, sheet_id: str) -> str:
+    """people: [(名前, 終わったSTEPの集合)]"""
+    now = dt.datetime.now(JST).strftime("%m/%d %H:%M")
+    total = len(people)
+    allclear = sum(1 for _, d in people if len(d) == 8)
+    at = [0] * 9  # 今いるSTEP（最初の終わっていないSTEP）。8 は全クリア
+    rows = []
+    for name, d in people:
+        cur = next((i for i in range(8) if i not in d), 8)
+        at[cur] += 1
+        bar = "".join("✅" if i in d else "⬜" for i in range(8))
+        pct = round(len(d) / 8 * 100)
+        where = "🎉 全クリア" if cur == 8 else f"STEP{cur} {STEP_NAMES[cur]}"
+        rows.append((len(d), f"`{bar}` {pct:>3}%  **{name}**　→ {where}"))
+    rows.sort(key=lambda x: -x[0])
+    head = [
+        f"## 📊 進み具合ボード（{os_name}版）",
+        f"メンバー **{total}人**　／　全クリア **{allclear}人**　（{now} 更新・1時間ごと）",
+        "いる場所：" + "　".join(f"STEP{i} {at[i]}人" for i in range(8)) + f"　🎉 {at[8]}人",
+        "",
+    ]
+    foot = ["", f"📄 くわしくは表 → <https://docs.google.com/spreadsheets/d/{sheet_id}/edit>"]
+    body = [r for _, r in rows] or ["（まだメンバーはいません）"]
+    out = head + body + foot
+    while len("\n".join(out)) > 1900 and len(body) > 1:  # Discord の文字数の上限
+        body = body[:-1]
+        out = head + body + [f"…ほか {total - len(body)}人"] + foot
+    return "\n".join(out)
 
 
 def gspread_a1(row: int, col: int) -> str:
