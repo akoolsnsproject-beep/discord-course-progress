@@ -81,6 +81,10 @@ def secret(name: str) -> str:
     try:
         import keyring
         v = keyring.get_password(KEYRING_SERVICE, name)
+        if not v:  # 長いもの（Google の JSON）は小分けにして入れてある
+            n = keyring.get_password(KEYRING_SERVICE, f"{name}_n")
+            if n:
+                v = "".join(keyring.get_password(KEYRING_SERVICE, f"{name}_{i}") or "" for i in range(int(n)))
     except Exception:
         v = None
     if not v:
