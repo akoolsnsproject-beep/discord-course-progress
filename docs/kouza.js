@@ -87,7 +87,7 @@
     location.href = 'https://line.me/R/oaMessage/' + encodeURIComponent(OA) + '/?' + encodeURIComponent(text);
   }
 
-  /* 🆘 こまったボタン（右下に浮かぶ）＋下から出る選択肢 */
+  /* 🆘 困ったボタン（右下に浮かぶ）＋下から出る選択肢 */
   var sc = document.createElement('style');
   sc.textContent =
     '.sos{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:50;background:#e5322d;color:#fff;border:3px solid #fff;border-radius:40px;padding:12px 18px;font-weight:900;font-size:16px;font-family:inherit;box-shadow:0 0 18px rgba(229,50,45,.6);-webkit-tap-highlight-color:transparent}' +
@@ -98,7 +98,7 @@
     '.sossh button{display:block;width:100%;text-align:left;background:#2a2a30;color:#fff;border:0;border-radius:12px;padding:15px 14px;margin:8px 0;font-size:16px;font-weight:700;font-family:inherit}' +
     '.sossh .x{background:none;color:#888;text-align:center;font-size:14px;margin-top:4px}';
   document.head.appendChild(sc);
-  var sb = document.createElement('button'); sb.className = 'sos'; sb.textContent = '🆘 こまった';
+  var sb = document.createElement('button'); sb.className = 'sos'; sb.textContent = '🆘 困った';
   var bg = document.createElement('div'); bg.className = 'sosbg';
   var sh = document.createElement('div'); sh.className = 'sossh';
   var tg = '（STEP' + n + '）';
