@@ -157,7 +157,7 @@ body{font-family:"Hiragino Sans","Noto Sans JP","Noto Sans CJK JP",sans-serif;ba
 .sm{top:40px;height:160px}
 .perm{top:120px}
 .chips2 span{margin-bottom:3px}
-</style></head><body><div class="wrap">
+</style><style>.omk{margin:26px 16px 10px;padding:18px 14px 12px;border:2px dashed #ff8a24;border-radius:18px;background:#120c08}.omk .omh{color:#ffb066;font-weight:900;font-size:14px;margin-bottom:10px}</style></head><body><div class="wrap">
 <div class="top"><div class="l"><span>STEP8 ｜ Windows</span><span id="pc">0 / 5</span></div><div class="bar"><i id="pb"></i></div></div>
 <div class="hero"><img src="img/s8.jpg" alt=""></div>
 <div class="ht"><div class="s">STEP 8 ｜ Windows</div><h1>自分だけのAI<br>「ジャービス」</h1><div class="sub">話しかけると声で答える</div>
@@ -175,6 +175,16 @@ body{font-family:"Hiragino Sans","Noto Sans JP","Noto Sans CJK JP",sans-serif;ba
 <div class="sec" data-n="5"><div class="st"><b>5</b>起動して話しかける</div><div class="shot"><div class="stage br"><div class="url">🔒 localhost:8000</div><div class="jv"><div class="hx " data-t="② 呼びかけて話す" data-p="t" style="text-align:center;padding:4px"><div class="jc"></div><div class="jt">「ジャービス、今日の天気は？」</div></div></div><div class="perm">localhost:8000 がマイクの使用を求めています<div style="text-align:right;margin-top:6px"><span class="mb">ブロック</span> <span class="hx mb pri" data-t="① 許可" data-p="t" style="">許可</span></div></div></div></div><div class="tx">ターミナルでこれを打ち、Chromeで <span class="k">http://localhost:8000</span> を開く → マイクを「許可」→ 話しかけます。</div><div class="cmd"><span>python server.py</span><button onclick="cp(this)">コピー</button></div><div class="tip">📸 会話している画面の録画を撮っておこう</div></div>
 
 <div class="goal"><div class="b">🎉 全STEPクリア！おつかれさま！</div><div class="g2">できたら、LINEにもどって［✅ STEP8 できた！］を押してね</div></div>
+<div class="omk"><div class="omh">🎁 おまけ｜全部できた人へ</div>
+<div class="st"><b>＋</b>いつもの作業を「スキル」にする</div>
+<div class="tx"><span class="k">スキル</span>は、Claudeにわたしておく「いつもの手順書」です。たとえば「毎日の投稿文はこの形で作る」という手順をスキルにしておくと、毎回くわしく説明しなくても同じやり方でやってくれます。<br><br><b>① 準備（1回だけ）</b><br>claude.ai の左下の自分の名前 →「<span class="k">設定</span>」→「<span class="k">機能</span>」で、「<span class="k">コード実行とファイル作成</span>」をONにします。<br><br><b>② Claudeといっしょに作る</b><br>下の文を claude.ai に送ります。Claudeが質問してくるので答えていくと、スキルのファイルを作ってくれます。<br><br><b>③ スキルを入れる</b><br>できたファイルを、Claudeに言われたとおり「<span class="k">カスタマイズ</span>」→「<span class="k">スキル</span>」から入れます。</div>
+<div class="copy"><button onclick="cp(this)">コピー</button><span>初心者です。毎日、Threadsに投稿する文章を作っています。
+【いつもの手順】
+・テーマを1つ決める
+・150文字以内で、最初の1行で興味を引く
+・最後に質問を1つ入れる
+この手順を「スキル」にしたいです。必要なことを質問しながら、スキルのファイルを作ってください。そのあと、claude.aiへの入れ方を、画面のどこを押すかまで1つずつ教えてください。</span></div>
+<div class="tip">画面の名前や場所がちがうときは、スクショをClaudeに見せて「どこを押す？」と聞けばOK。むずかしければ、ここはとばしても大丈夫です</div></div>
 <div class="help"><h3>🆘 うまくいかないとき</h3>赤い文字のエラーや画面のスクショを <span class="k">claude.ai</span> に貼って「初心者にも分かるように直し方を教えて」と送ればOK。<br>それでもダメなら、この画面の右下にある［🆘 困った］を押して問い合わせてね。</div>
 <a class="back" href="#" onclick="history.length>1?history.back():window.close();return false">LINEにもどる</a>
 </div><div class="toast" id="t">コピーしました</div>
