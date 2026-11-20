@@ -5,7 +5,7 @@
   var m = location.pathname.match(/step(\d)-(win|mac)\.html/);
   if (!m) return;
   var n = +m[1], os = m[2], osName = os === 'win' ? 'Windows' : 'Mac';
-  var MSG = '✅ STEP' + n + 'クリア（' + osName + '）';
+  var MSG = '✅ STEP' + n + 'クリア' + (os === 'mac' ? '！' : '');
   var KEY = 'nx_s' + n + os;
 
   var css = document.createElement('style');
