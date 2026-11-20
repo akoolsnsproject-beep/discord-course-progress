@@ -125,3 +125,33 @@
   };
   document.head.appendChild(sdk);
 })();
+
+/* ✏️ カスタマイズ枠：入力すると頼み文が自動で変わる */
+(function () {
+  var st = document.createElement('style');
+  st.textContent =
+    '.mk{margin-top:12px;background:#15110d;border:1.5px solid #ff8a24;border-radius:14px;padding:12px}' +
+    '.mk .mkh{font-weight:900;color:#ffb066;font-size:14.5px;margin-bottom:2px}' +
+    '.mk .mks{font-size:12.5px;color:#bbb;margin-bottom:8px}' +
+    '.mk label{display:block;margin:8px 0}' +
+    '.mk label span{display:block;font-size:12.5px;color:#ddd;font-weight:700;margin-bottom:3px}' +
+    '.mk input,.mk select,.mk textarea{width:100%;box-sizing:border-box;background:#0b0b0d;color:#fff;border:1.5px solid #555;border-radius:9px;padding:9px 10px;font-size:15px;font-family:inherit}' +
+    '.mk textarea{min-height:64px;resize:vertical}' +
+    '.mk input:focus,.mk select:focus,.mk textarea:focus{outline:none;border-color:#ff8a24}' +
+    '.mk .mkp{margin-top:12px;font-size:12.5px;color:#ffb066;font-weight:800}' +
+    '.mk .copy{margin-top:6px}';
+  document.head.appendChild(st);
+  function run(mk) {
+    var tpl = mk.getAttribute('data-tpl'), out = mk.querySelector('.mko');
+    var ins = [].slice.call(mk.querySelectorAll('[data-k]'));
+    function upd() {
+      var t = tpl;
+      ins.forEach(function (i) { var v = (i.value || '').trim() || i.getAttribute('placeholder') || ''; t = t.split('{' + i.getAttribute('data-k') + '}').join(v); });
+      out.textContent = t;
+    }
+    ins.forEach(function (i) { i.addEventListener('input', upd); i.addEventListener('change', upd); });
+    upd();
+  }
+  function go() { [].forEach.call(document.querySelectorAll('.mk'), run); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
+})();
