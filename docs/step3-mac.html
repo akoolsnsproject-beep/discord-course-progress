@@ -158,10 +158,10 @@ body{font-family:"Hiragino Sans","Noto Sans JP","Noto Sans CJK JP",sans-serif;ba
 .perm{top:120px}
 .chips2 span{margin-bottom:3px}
 </style></head><body><div class="wrap">
-<div class="top"><div class="l"><span>STEP3 ｜ Mac</span><span id="pc">0 / 5</span></div><div class="bar"><i id="pb"></i></div></div>
+<div class="top"><div class="l"><span>STEP3 ｜ Mac</span><span id="pc">0 / 7</span></div><div class="bar"><i id="pb"></i></div></div>
 <div class="hero"><img src="img/s3.jpg" alt=""></div>
 <div class="ht"><div class="s">STEP 3 ｜ Mac</div><h1>伝わる頼み方</h1><div class="sub">AIに一発で伝わる4つの型</div>
-<div class="chips"><span class="chip">⏱ 15分</span><span class="chip">🎯 renamedに 1.jpg〜3.jpg が並んだらOK</span><span class="chip">📋 5ステップ</span></div></div>
+<div class="chips"><span class="chip">⏱ 20分</span><span class="chip">🎯 renamedに 1.jpg〜3.jpg が並んだらOK</span><span class="chip">📋 7ステップ</span></div></div>
 <div class="sec" data-n="1"><div class="st"><b>1</b>頼み方の「型」を知る</div><div class="tx">AIへのお願いは、この<span class="k">4つ</span>をそろえると一発で伝わります。<div class="four"><div><b>やりたいこと</b>何をしたい？</div><div><b>使うもの</b>パソコン・道具・レベル</div><div><b>条件</b>無料だけ など</div><div><b>完成イメージ</b>どうなればOK？</div></div></div><div class="copy"><button onclick="cp(this)">型をコピー</button><span>【やりたいこと】
 【使うもの】Mac / Python（python3）/ 初心者
 【条件】無料のものだけ
@@ -175,6 +175,12 @@ body{font-family:"Hiragino Sans","Noto Sans JP","Noto Sans CJK JP",sans-serif;ba
 <div class="sec" data-n="4"><div class="st"><b>4</b>作って動かす</div><div class="shot"><div class="stage fvw mac"><div class="fv-top">Finder　›　ai-kouza › renamed</div><div class="fv"><div class="hx " data-t="🎉 こう並んだら成功" data-p="b" style="display:flex;gap:4px;padding:4px"><div class="fi"><div class="th" style="background:linear-gradient(135deg,#ffb36b,#c2602a)"></div><div>1.jpg</div></div><div class="fi"><div class="th" style="background:linear-gradient(135deg,#6bd0ff,#1a5fb4)"></div><div>2.jpg</div></div><div class="fi"><div class="th" style="background:linear-gradient(135deg,#ffc6e0,#e05a8a)"></div><div>3.jpg</div></div></div></div></div></div><div class="tx">STEP2と同じように <span class="k">rename.py</span> を作ってコードを貼り、保存。ターミナルで動かします。</div><div class="cmd"><span>python3 rename.py</span><button onclick="cp(this)">コピー</button></div></div>
 <div class="sec" data-n="5"><div class="st"><b>5</b>エラーが出たら</div><div class="shot"><div class="stage cl"><div style="position:absolute;left:16px;top:14px;font-weight:800;font-size:14px;color:#c96442">✳ Claude</div><div style="position:absolute;left:16px;top:44px;font-size:16px;color:#444">こんにちは！何をお手伝いしましょう？</div><div class="hx box" data-t="① 貼って送信" data-p="t" style="">このエラーが出ました。原因を一言で教えて、直したコードを全部ください。（赤い文字）<div class="send">↑</div></div></div></div><div class="tx">赤い文字が出ても大丈夫。下の文のあとにエラーを全部貼って、Claudeに送ります。</div><div class="copy"><button onclick="cp(this)">コピー</button><span>このエラーが出ました。原因を一言で教えて、直したコードを全部ください。
 （ここに赤い文字を全部貼る）</span></div><div class="tip">📸 送った文と、renamedフォルダの中のスクショを撮っておこう</div></div>
+
+<div class="sec" data-n="6"><div class="st"><b>6</b>まず「計画」を見せてもらう</div><div class="shot"><div class="stage cl"><div style="position:absolute;left:16px;top:14px;font-weight:800;font-size:14px;color:#c96442">✳ Claude</div><div style="position:absolute;left:16px;top:44px;font-size:16px;color:#444">こんにちは！何をお手伝いしましょう？</div><div class="hx box" data-t="作る前に計画だけ見せてもらう" data-p="t" style="">いきなりコードを書かないで。まず何をどんな順番で作るか教えて…<div class="send">↑</div></div></div></div><div class="tx">大きいものを頼むときは、いきなり作らせずに<span class="k">計画</span>を先に見せてもらいます。計画がちがっていたら、その場で直してもらえば失敗しません。</div><div class="copy"><button onclick="cp(this)">コピー</button><span>いきなりコードを書かないでください。
+まず「何を・どんな順番で作るか」を3〜5行で教えてください。
+私が「OK」と言ってから作ってください。</span></div><div class="tip">計画に分からない言葉があれば「〇〇って何？」と聞いてOK</div></div>
+
+<div class="sec" data-n="7"><div class="st"><b>7</b>いつでも元に戻せるようにする</div><div class="shot"><div class="stage fvw mac"><div class="fv-top">Finder　›　ai-kouza</div><div class="fv"><div class="hx " data-t="予備（_old）があれば安心" data-p="b" style="display:flex;gap:4px;padding:4px"><div class="fi"><div class="th" style="background:#e9eef6;display:flex;align-items:center;justify-content:center;font-size:26px">📄</div><div>rename.py</div></div><div class="fi"><div class="th" style="background:#ffd9a8;display:flex;align-items:center;justify-content:center;font-size:26px">📄</div><div>rename_old.py</div></div></div></div></div></div><div class="tx">直してもらう前に、ファイルを右クリック →「<span class="k">複製</span>」で予備を作り、名前を <span class="k">rename_old.py</span> にしておきます。VS Codeの中なら <span class="k">command + Z</span> で1つ前に戻せます。</div><div class="copy"><button onclick="cp(this)">コピー</button><span>直すときは、元のファイルは消さずに、新しい名前（rename_v2.py）で作ってください。</span></div><div class="tip">予備があれば、こわしても大丈夫。何度でもやり直せます</div></div>
 
 <div class="goal"><div class="b">🎉 STEP3クリア！</div><div class="g2">できたら、LINEにもどって［✅ STEP3 できた！］を押してね</div></div>
 <div class="help"><h3>🆘 うまくいかないとき</h3>赤い文字のエラーや画面のスクショを <span class="k">claude.ai</span> に貼って「初心者にも分かるように直し方を教えて」と送ればOK。<br>それでもダメなら、この画面の右下にある［🆘 困った］を押して問い合わせてね。</div>
