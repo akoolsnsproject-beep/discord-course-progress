@@ -104,7 +104,6 @@
   var tg = '（STEP' + n + '）';
   sh.innerHTML = '<div class="t">🆘 どうしましたか？</div><div class="u">選ぶとLINEにそのまま送られます</div>' +
     '<button data-m="🆘 Claudeに聞きたい' + tg + '">💬 Claudeに聞きたい（聞き方の文）</button>' +
-    '<button data-m="🆘 Claudeを開きたい' + tg + '">🖥 Claudeを開きたい</button>' +
     '<button data-m="🆘 担当に相談したい' + tg + '">🙋 担当に相談したい</button>' +
     '<button class="x">とじる</button>';
   function op(v) { sh.classList.toggle('on', v); bg.classList.toggle('on', v); }
