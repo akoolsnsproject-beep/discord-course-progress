@@ -3,10 +3,11 @@
   var LIFF_ID = '2012700328-ixoZeXYW';
   var OA = '@982rpclz';
   var m = location.pathname.match(/step(\d)-(win|mac)\.html/);
-  if (!m) return;
-  var n = +m[1], os = m[2], osName = os === 'win' ? 'Windows' : 'Mac';
-  var MSG = '✅ STEP' + n + 'クリア' + (os === 'mac' ? '！' : '');
-  var KEY = 'nx_s' + n + os;
+  var ma = location.pathname.match(/\/a(\d)\.html/);
+  if (!m && !ma) return;
+  var n, os, osName, MSG, KEY, LBL;
+  if (m) { n = +m[1]; os = m[2]; osName = os === 'win' ? 'Windows' : 'Mac'; MSG = '✅ STEP' + n + 'クリア' + (os === 'mac' ? '！' : ''); KEY = 'nx_s' + n + os; LBL = 'STEP' + n; }
+  else { n = +ma[1]; os = ''; osName = ''; MSG = '✅ 応用' + n + 'クリア'; KEY = 'nx_a' + n; LBL = '応用' + n; }
 
   var css = document.createElement('style');
   css.textContent =
@@ -44,8 +45,8 @@
     var pb = document.getElementById('pb2'); if (pb) pb.style.width = (d / total * 100) + '%';
     fin.className = 'fin' + (all ? ' on' : '');
     fin.innerHTML = all
-      ? '<div class="t">🎉 ぜんぶチェックできました！</div><button class="b" id="clr">STEP' + n + ' クリア！ LINEに送る ▶</button><div class="s" id="st"></div>'
-      : '<div class="t">ぜんぶチェックすると、ここにボタンが出ます（あと' + (total - d) + 'つ）</div><span class="b">🔒 STEP' + n + ' クリア</span>';
+      ? '<div class="t">🎉 ぜんぶチェックできました！</div><button class="b" id="clr">' + LBL + ' クリア！ LINEに送る ▶</button><div class="s" id="st"></div>'
+      : '<div class="t">ぜんぶチェックすると、ここにボタンが出ます（あと' + (total - d) + 'つ）</div><span class="b">🔒 ' + LBL + ' クリア</span>';
     if (all) document.getElementById('clr').onclick = send;
   }
   secs.forEach(function (s, i) {
@@ -101,7 +102,7 @@
   var sb = document.createElement('button'); sb.className = 'sos'; sb.textContent = '🆘 困った';
   var bg = document.createElement('div'); bg.className = 'sosbg';
   var sh = document.createElement('div'); sh.className = 'sossh';
-  var tg = '（STEP' + n + '）';
+  var tg = '（' + LBL + '）';
   sh.innerHTML = '<div class="t">🆘 どうしましたか？</div><div class="u">選ぶとLINEにそのまま送られます</div>' +
     '<button data-m="🆘 Claudeに聞きたい' + tg + '">💬 Claudeに聞きたい（聞き方の文）</button>' +
     '<button data-m="🆘 担当に相談したい' + tg + '">🙋 担当に相談したい</button>' +
