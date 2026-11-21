@@ -9,6 +9,26 @@
   if (m) { n = +m[1]; os = m[2]; osName = os === 'win' ? 'Windows' : 'Mac'; MSG = '✅ STEP' + n + 'クリア' + (os === 'mac' ? '！' : ''); KEY = 'nx_s' + n + os; LBL = 'STEP' + n; }
   else { n = +ma[1]; os = ''; osName = ''; MSG = '✅ 応用' + n + 'クリア'; KEY = 'nx_a' + n; LBL = '応用' + n; }
 
+
+  /* 使うサイトのリンク（上に並べる）＋本文のサイト名をリンクに */
+  var LK = {"s1": [["Python", "https://www.python.org/downloads/"], ["VS Code", "https://code.visualstudio.com/download"], ["GitHub登録", "https://github.com/signup"], ["Claude", "https://claude.ai/new"]], "s2": [["Claude 新しいチャット", "https://claude.ai/new"]], "s3": [["Claude 新しいチャット", "https://claude.ai/new"]], "s4": [["Claude プロジェクト", "https://claude.ai/projects"]], "s5": [["Meta for Developers", "https://developers.facebook.com/apps"], ["GitHub 新規作成", "https://github.com/new"], ["ntfy", "https://ntfy.sh/"]], "s6": [["Facebookページ作成", "https://www.facebook.com/pages/create"], ["Meta for Developers", "https://developers.facebook.com/apps"], ["GitHub 新規作成", "https://github.com/new"]], "s7": [["Claude 新しいチャット", "https://claude.ai/new"]], "s8": [["Ollama", "https://ollama.com/download"], ["VOICEVOX", "https://voicevox.hiroshiba.jp/"], ["Claude Code", "https://code.claude.com"]], "a1": [["楽天アフィリエイト", "https://affiliate.rakuten.co.jp/"], ["楽天ROOM", "https://room.rakuten.co.jp/"]], "a2": [["CapCut", "https://www.capcut.com/"]], "a3": [["Canva", "https://www.canva.com/"]], "a4": [["Claude 新しいチャット", "https://claude.ai/new"]], "a5": [["Claude プロジェクト", "https://claude.ai/projects"]]};
+  var lkey = m ? 's' + n : 'a' + n;
+  var lst = document.createElement('style');
+  lst.textContent = '.chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:14px 0 4px}.chips span{font-size:12px;color:#a89a8c}.chips a{font-size:13px;font-weight:800;color:#ffb066;text-decoration:none;border:1px solid #5a3415;border-radius:99px;padding:6px 11px;background:#15110d}a.k.lk{text-decoration:underline;text-underline-offset:3px}a.k.lk::after{content:" ↗";font-size:.85em}';
+  document.head.appendChild(lst);
+  if (LK[lkey]) {
+    var ch = document.createElement('div'); ch.className = 'chips';
+    ch.innerHTML = '<span>このSTEPで使うサイト：</span>' + LK[lkey].map(function (l) { return '<a href="' + l[1] + '" target="_blank" rel="noopener">' + l[0] + ' ↗</a>'; }).join('');
+    var ht = document.querySelector('.ht'); if (ht) ht.appendChild(ch);
+  }
+  [].forEach.call(document.querySelectorAll('span.k'), function (e) {
+    var t = (e.textContent || '').trim();
+    if (!/^[a-z0-9-]+(\.[a-z0-9-]+)+(\/[A-Za-z0-9._\/-]*)?$/.test(t)) return;
+    if (/\.(py|csv|mp4|mov|txt|json|yml|yaml|srt|md|png|jpg|html|js)$/i.test(t) || t[0] === '.') return;
+    var a = document.createElement('a'); a.className = 'k lk'; a.href = 'https://' + (t === 'claude.ai' ? 'claude.ai/new' : t); a.target = '_blank'; a.rel = 'noopener'; a.textContent = t;
+    e.replaceWith(a);
+  });
+
   var css = document.createElement('style');
   css.textContent =
     '.ck{display:flex;align-items:center;justify-content:center;gap:10px;margin:12px 0 4px;padding:13px;border-radius:14px;border:2px dashed #ff8a24;color:#ffb066;font-weight:900;font-size:16px;background:rgba(255,138,36,.06);cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}' +
