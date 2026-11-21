@@ -4,15 +4,17 @@
   var OA = '@982rpclz';
   var m = location.pathname.match(/step(\d)-(win|mac)\.html/);
   var ma = location.pathname.match(/\/a(\d)\.html/);
-  if (!m && !ma) return;
+  var isRules = /\/rules\.html/.test(location.pathname);
+  if (!m && !ma && !isRules) return;
   var n, os, osName, MSG, KEY, LBL;
   if (m) { n = +m[1]; os = m[2]; osName = os === 'win' ? 'Windows' : 'Mac'; MSG = '✅ STEP' + n + 'クリア' + (os === 'mac' ? '！' : ''); KEY = 'nx_s' + n + os; LBL = 'STEP' + n; }
-  else { n = +ma[1]; os = ''; osName = ''; MSG = '✅ 応用' + n + 'クリア'; KEY = 'nx_a' + n; LBL = '応用' + n; }
+  else if (ma) { n = +ma[1]; os = ''; osName = ''; MSG = '✅ 応用' + n + 'クリア'; KEY = 'nx_a' + n; LBL = '応用' + n; }
+  else { n = 0; os = ''; osName = ''; MSG = ''; KEY = 'nx_rules'; LBL = 'ルール'; }
 
 
   /* 使うサイトのリンク（上に並べる）＋本文のサイト名をリンクに */
-  var LK = {"s1": [["Python", "https://www.python.org/downloads/"], ["VS Code", "https://code.visualstudio.com/download"], ["GitHub登録", "https://github.com/signup"], ["Claude", "https://claude.ai/new"]], "s2": [["Claude 新しいチャット", "https://claude.ai/new"]], "s3": [["Claude 新しいチャット", "https://claude.ai/new"]], "s4": [["Claude プロジェクト", "https://claude.ai/projects"]], "s5": [["Meta for Developers", "https://developers.facebook.com/apps"], ["GitHub 新規作成", "https://github.com/new"], ["ntfy", "https://ntfy.sh/"]], "s6": [["Facebookページ作成", "https://www.facebook.com/pages/create"], ["Meta for Developers", "https://developers.facebook.com/apps"], ["GitHub 新規作成", "https://github.com/new"]], "s7": [["Claude 新しいチャット", "https://claude.ai/new"]], "s8": [["Ollama", "https://ollama.com/download"], ["VOICEVOX", "https://voicevox.hiroshiba.jp/"], ["Claude Code", "https://code.claude.com"]], "a1": [["楽天アフィリエイト", "https://affiliate.rakuten.co.jp/"], ["楽天ROOM", "https://room.rakuten.co.jp/"]], "a2": [["CapCut", "https://www.capcut.com/"]], "a3": [["Canva", "https://www.canva.com/"]], "a4": [["Claude 新しいチャット", "https://claude.ai/new"]], "a5": [["Claude プロジェクト", "https://claude.ai/projects"]]};
-  var lkey = m ? 's' + n : 'a' + n;
+  var LK = {"s1": [["Python", "https://www.python.org/downloads/"], ["VS Code", "https://code.visualstudio.com/download"], ["GitHub登録", "https://github.com/signup"], ["Claude", "https://claude.ai/new"]], "s2": [["Claude 新しいチャット", "https://claude.ai/new"]], "s3": [["Claude 新しいチャット", "https://claude.ai/new"]], "s4": [["Claude プロジェクト", "https://claude.ai/projects"]], "s5": [["Meta for Developers", "https://developers.facebook.com/apps"], ["GitHub 新規作成", "https://github.com/new"], ["ntfy", "https://ntfy.sh/"]], "s6": [["Facebookページ作成", "https://www.facebook.com/pages/create"], ["Meta for Developers", "https://developers.facebook.com/apps"], ["GitHub 新規作成", "https://github.com/new"]], "s7": [["Claude 新しいチャット", "https://claude.ai/new"]], "s8": [["Ollama", "https://ollama.com/download"], ["VOICEVOX", "https://voicevox.hiroshiba.jp/"], ["Claude Code", "https://code.claude.com"]], "a1": [["楽天アフィリエイト", "https://affiliate.rakuten.co.jp/"], ["楽天ROOM", "https://room.rakuten.co.jp/"]], "a2": [["CapCut", "https://www.capcut.com/"]], "a3": [["Canva", "https://www.canva.com/"]], "a4": [["Claude プロジェクト", "https://claude.ai/projects"]]};
+  var lkey = m ? 's' + n : (ma ? 'a' + n : 'rules');
   var lst = document.createElement('style');
   lst.textContent = '.chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:14px 0 4px}.chips span{font-size:12px;color:#a89a8c}.chips a{font-size:13px;font-weight:800;color:#ffb066;text-decoration:none;border:1px solid #5a3415;border-radius:99px;padding:6px 11px;background:#15110d}a.k.lk{text-decoration:underline;text-underline-offset:3px}a.k.lk::after{content:" ↗";font-size:.85em}';
   document.head.appendChild(lst);
@@ -21,6 +23,18 @@
     ch.innerHTML = '<span>このSTEPで使うサイト：</span>' + LK[lkey].map(function (l) { return '<a href="' + l[1] + '" target="_blank" rel="noopener">' + l[0] + ' ↗</a>'; }).join('');
     var ht = document.querySelector('.ht'); if (ht) ht.appendChild(ch);
   }
+  (function () {
+    var ht = document.querySelector('.ht'); if (!ht || isRules) return;
+    var r = document.createElement('div'); r.className = 'chips';
+    r.innerHTML = '<a href="rules.html" style="border-color:#ff8a24">📕 はじめに読むルール（いつでも）</a>';
+    ht.appendChild(r);
+    if (m && n === 5) {
+      var nb = document.createElement('div');
+      nb.style.cssText = 'margin:12px 0 0;padding:12px 14px;border-radius:12px;border:1.5px solid #ff8a24;background:#1d140b;color:#ffcf99;font-size:14px;line-height:1.6';
+      nb.innerHTML = '📕 <b>投稿を始める前に</b>、<a href="rules.html" style="color:#ffb066;font-weight:800">はじめに読むルール</a>の最後のクイズ5問を確認してね（著作権・#PR・うそを書かない）';
+      ht.appendChild(nb);
+    }
+  })();
   [].forEach.call(document.querySelectorAll('span.k'), function (e) {
     var t = (e.textContent || '').trim();
     if (!/^[a-z0-9-]+(\.[a-z0-9-]+)+(\/[A-Za-z0-9._\/-]*)?$/.test(t)) return;
@@ -65,9 +79,9 @@
     var pb = document.getElementById('pb2'); if (pb) pb.style.width = (d / total * 100) + '%';
     fin.className = 'fin' + (all ? ' on' : '');
     fin.innerHTML = all
-      ? '<div class="t">🎉 ぜんぶチェックできました！</div><button class="b" id="clr">' + LBL + ' クリア！ LINEに送る ▶</button><div class="s" id="st"></div>'
+      ? (isRules ? '<div class="t">🎉 ルールを確認できました！</div><button class="b" id="clr">講座にもどる ▶</button><div class="s" id="st"></div>' : '<div class="t">🎉 ぜんぶチェックできました！</div><button class="b" id="clr">' + LBL + ' クリア！ LINEに送る ▶</button><div class="s" id="st"></div>')
       : '<div class="t">ぜんぶチェックすると、ここにボタンが出ます（あと' + (total - d) + 'つ）</div><span class="b">🔒 ' + LBL + ' クリア</span>';
-    if (all) document.getElementById('clr').onclick = send;
+    if (all) document.getElementById('clr').onclick = isRules ? function () { if (window.liff && ready && liff.isInClient()) liff.closeWindow(); else history.back(); } : send;
   }
   secs.forEach(function (s, i) {
     var c = document.createElement('div');
