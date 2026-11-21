@@ -239,7 +239,7 @@ var C={'オレンジ':'#ff8a24','青':'#2f8bff','水色':'#38d6ff','緑':'#22c55
 function col(v){v=(v||'').trim();for(var k in C){if(v.indexOf(k)>=0)return C[k]}var o=new Option().style;o.color=v;return o.color?v:'#ff8a24'}
 [].forEach.call(document.querySelectorAll('.exs'),function(g){var lab=g.previousElementSibling,inp=lab&&lab.querySelector('[data-k]');if(!inp)return;
  function mark(){[].forEach.call(g.querySelectorAll('.ex'),function(b){b.classList.toggle('on',b.getAttribute('data-v')===inp.value.trim())})}
- g.addEventListener('click',function(e){var b=e.target.closest('.ex');if(!b)return;inp.value=b.getAttribute('data-v');inp.dispatchEvent(new Event('input'));mark()});
+ g.addEventListener('click',function(e){var b=e.target.closest('.ex');if(!b)return;inp.value=b.getAttribute('data-v');inp.dispatchEvent(new Event('input',{bubbles:true}));mark()});
  inp.addEventListener('input',mark);mark()});
 var mk=document.getElementById('jvmk');if(!mk)return;var p=document.getElementById('jvp');
 function v(k){var i=mk.querySelector('[data-k="'+k+'"]');return (i.value||'').trim()||i.placeholder}
